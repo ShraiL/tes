@@ -4,11 +4,22 @@ from langchain_community.vectorstores import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-DATA_DIR = 'data'
-DB_DIR = 'vectorstore'
-EMBEDDING_MODEL = 'nomic-embed-text'
-CHUNK_SIZE = 2000
-CHUNK_OVERLAP = 50
+# ╔═════════════════════════════════════════════════════════════════════════════╗
+# ║  🔧 CHANGE THESE IF PROFESSOR ASKS                                          ║
+# ╠═════════════════════════════════════════════════════════════════════════════╣
+# ║  DATA_DIR         → Folder where .txt files are located                     ║
+# ║  DB_DIR           → Folder where ChromaDB will save (usually keep as is)    ║
+# ║  EMBEDDING_MODEL  → 'nomic-embed-text' or 'llama3.1' (professor will say)   ║
+# ║  CHUNK_SIZE       → How big each chunk is (default 2000)                    ║
+# ║  CHUNK_OVERLAP    → Overlap between chunks (default 50)                     ║
+# ╚═════════════════════════════════════════════════════════════════════════════╝
+
+DATA_DIR = 'data'                     # ← CHANGE if professor says different folder
+DB_DIR = 'vectorstore'                # ← Usually keep this
+EMBEDDING_MODEL = 'nomic-embed-text'  # ← CHANGE if professor says different model
+CHUNK_SIZE = 2000                     # ← CHANGE if professor specifies
+CHUNK_OVERLAP = 50                    # ← CHANGE if professor specifies
+
 
 def load_doc():
     docs = []
@@ -20,6 +31,7 @@ def load_doc():
     print(f'Loaded {len(docs)} documents')
     return docs
 
+
 def split_docs(docs):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=CHUNK_SIZE,
@@ -28,6 +40,7 @@ def split_docs(docs):
     chunks = splitter.split_documents(docs)
     print(f'Created {len(chunks)} chunks')
     return chunks
+
 
 def create_vectorstore(chunks):
     embeddings = OllamaEmbeddings(model=EMBEDDING_MODEL)
@@ -38,6 +51,7 @@ def create_vectorstore(chunks):
     )
     db.persist()
     print(f'Vectorstore saved!')
+
 
 if __name__ == '__main__':
     docs = load_doc()
