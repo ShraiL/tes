@@ -187,4 +187,24 @@ python blip_caption.py
 
 ---
 
+without blip:
+langchain
+langchain-community
+langchain-text-splitters
+langchain-ollama
+chromadb
+streamlit
+
+
+with blip:
+langchain
+langchain-community
+langchain-text-splitters
+langchain-ollama
+chromadb
+streamlit
+transformers
+pillow
+torch
+
 Good luck! 🍀
